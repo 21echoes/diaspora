@@ -150,7 +150,9 @@ class PhotosController < ApplicationController
     if @photo
       respond_with @photo
     else
-      redirect_to :back
+      # TODO(dk): apparently this redirects to aspects index if there's no referrer... where is that set (rails default is to throw an error)
+      # redirect_to :back
+      redirect_to default_stream_path
     end
   end
 

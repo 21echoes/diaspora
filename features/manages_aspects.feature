@@ -39,7 +39,7 @@ Feature: User manages contacts
     And I wait for the ajax to finish
     And I preemptively confirm the alert
     And I press "Delete" in the modal window
-    Then I should be on the aspects page
+    Then I should be on the stream page
     And I should not see "People" within "#aspect_nav"
 
   Scenario: Editing the aspect memberships of a contact from the aspect edit facebox

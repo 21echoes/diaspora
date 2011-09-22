@@ -116,6 +116,6 @@ class VannaController < Vanna::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(:user) || aspects_path(:a_ids => current_user.aspects.where(:open => true).select(:id).all.map{|a| a.id})
+    stored_location_for(:user) || default_stream_path(:a_ids => current_user.aspects.where(:open => true).select(:id).all.map{|a| a.id})
   end
 end

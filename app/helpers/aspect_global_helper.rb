@@ -44,14 +44,14 @@ module AspectGlobalHelper
     opts[:params] = opts[:params].merge("a_ids[]" => aspect.id, :created_at => params[:created_at])
     opts['data-guid'] = aspect.id
 
-    link_to aspect.name, aspects_path( opts[:params] ), opts
+    link_to aspect.name, default_stream_path( opts[:params] ), opts
   end
 
   def aspect_or_all_path(aspect)
     if @aspect.is_a? Aspect
       aspect_path @aspect
     else
-      aspects_path
+      default_stream_path
     end
   end
 

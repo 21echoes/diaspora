@@ -3,6 +3,8 @@ module NavigationHelpers
     case page_name
       when /^the home(?: )?page$/
         root_path
+      when /^the stream page$/
+        '/stream'
       when /^step (\d)$/
         if $1.to_i == 1
           getting_started_path

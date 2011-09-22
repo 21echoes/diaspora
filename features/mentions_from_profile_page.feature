@@ -26,12 +26,12 @@ Feature: mentioning a contact from their profile page
       And I append "I am eating a yogurt" to the publisher
       And I press "Share" in the modal window
       And I wait for the ajax to finish
-      When I am on the aspects page
+      When I am on the stream page
       And I follow "PostingTo" within "#aspect_nav"
       And I wait for the ajax to finish
       Then I should see "I am eating a yogurt"
 
-      When I am on the aspects page
+      When I am on the stream page
       And I follow "NotPostingThingsHere" within "#aspect_nav"
       And I wait for the ajax to finish
       Then I should see "I am eating a yogurt"
@@ -48,10 +48,10 @@ Feature: mentioning a contact from their profile page
       And I wait for the ajax to finish
       And I press "Share" in the modal window
 
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "PostingTo" aspect
       Then I should see "I am eating a yogurt"
 
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt"

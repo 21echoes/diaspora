@@ -12,7 +12,7 @@ describe HomeController do
       response.should_not be_redirect
     end
 
-    it 'redirects to multis index if user is logged in' do
+    it 'redirects to default stream path (currently multi) index if user is logged in' do
       sign_in alice
       get :show, :home => true
       response.should redirect_to(multi_path)

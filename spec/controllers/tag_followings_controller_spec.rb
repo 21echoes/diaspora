@@ -17,6 +17,10 @@ describe TagFollowingsController do
   end
 
   describe 'index' do
+    before do
+      pending
+    end
+
     it 'succeeds' do
       get :index
       response.should be_success

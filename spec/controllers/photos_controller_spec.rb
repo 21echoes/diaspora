@@ -135,6 +135,7 @@ describe PhotosController do
       it "redirects to the aspects page if there's no referrer" do
         request.env.delete("HTTP_REFERER")
         get :show, :id => @photo.to_param
+        # TODO(dk): so apparently redirect :back goes to aspects somehow?
         response.should redirect_to(aspects_path)
       end
     end

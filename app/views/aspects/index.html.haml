@@ -44,7 +44,7 @@
           = link_to t('streams.mentions.title'), mentions_path, :class => 'home_selector'
 
   .section#followed_tags_listing
-    = render 'tags/followed_tags_listings'
+    = render 'tags/followed_tags_listings', :stream => @stream
 
 .span-13.append-1
   #aspect_stream_container.stream_container

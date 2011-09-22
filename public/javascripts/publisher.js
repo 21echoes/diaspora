@@ -414,7 +414,7 @@ var Publisher = {
   },
   onSuccess: function(data, json, xhr){
     if (Publisher.bookmarklet == false) {
-      var isPostVisible = Diaspora.page.aspectNavigation.selectedAspects().length == 0;
+      var isPostVisible = Diaspora.page.strainerNavigation.selectedAspects().length == 0;
       var postedTo = Publisher.selectedAspectIds();
 
 
@@ -422,7 +422,7 @@ var Publisher = {
         isPostVisible = true;
 
       } else {
-        $.each(Diaspora.page.aspectNavigation.selectedAspects(), function(index, value) {
+        $.each(Diaspora.page.strainerNavigation.selectedAspects(), function(index, value) {
           if (postedTo.indexOf(parseInt(value)) > -1)
             isPostVisible = true;
         });

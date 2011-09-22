@@ -3,17 +3,26 @@
 -#   the COPYRIGHT file.
 
 - if user_signed_in?
-  %ul.left_nav
+  %ul#tag_nav.left_nav
     %li
-      %b=link_to t('streams.followed_tag.title'), tag_followings_path, :class => 'home_selector'
+      %b=link_to t('streams.followed_tag.title'), default_stream_path(:all_tags => true), :class => 'home_selector'
+
+      -#TODO(dk): include/excludes, links, and edits/deletes.
+      -# links select only that item, includes/excludes either explicitly enclude or explicitly exclude posts from that factor,
+      -# edit lets you edit an aspect, delete lets you delete tag.
+      -# eventually?: can save off custom combinations (and maybe even in/exclude them!)
 
       %ul.sub_nav
-        - if tags.size > 0
-          - for tg in tags
-            %li.unfollow{:id => "tag-following-#{tg.name}"}
-              .unfollow_icon.hidden
-                = link_to image_tag("icons/monotone_close_exit_delete.png", :height => 16, :title => t('aspects.index.unfollow_tag', :tag => tg.name)), tag_tag_followings_path(:name => tg.name, :remote => true), :confirm => t('are_you_sure'), :method => :delete, :remote => true, :id => "unfollow_" + tg.name
-              = link_to "##{tg.name}", tag_path(:name => tg.name), :class => "tag_selector"
+        - if defined?(stream) && defined?(stream.for_all_tags?)
+          %a.toggle_selector{:href => '#'}
+            = stream.for_all_tags? ? t('aspects.aspect_listings.deselect_all') : t('aspects.aspect_listings.select_all')
+        - for tg in tags
+          %li.unfollow{:data => {:tag_id => tg.id}, :class => ("active" if defined?(stream) && defined?(stream.tag_ids) && stream.tag_ids.include?(tg.id)), :id => "tag-following-#{tg.name}"}
+            .unfollow_icon.hidden
+              = link_to image_tag("icons/monotone_close_exit_delete.png", :height => 16, :title => t('aspects.index.unfollow_tag', :tag => tg.name)), tag_tag_followings_path(:name => tg.name, :remote => true), :confirm => t('are_you_sure'), :method => :delete, :remote => true, :id => "unfollow_" + tg.name
+            %a.tag_selector.name{:href => multi_path("tag_ids[]" => tg.id), :class => "name", 'data-guid' => tg.id}
+              = "##{tg.name}"
+
         %li
           = form_for TagFollowing.new do |tg|
             = text_field_tag :name, "", :class => "tag_input", :placeholder => t('streams.followed_tag.add_a_tag')

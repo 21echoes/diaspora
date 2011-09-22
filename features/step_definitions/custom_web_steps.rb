@@ -21,11 +21,11 @@ And /^I toggle the aspect "([^"]*)"$/ do |aspect_name|
 end
 
 Then /^the publisher should be collapsed$/ do
-	find("#publisher")["class"].should include("closed")
+  find("#publisher")["class"].should include("closed")
 end
 
 Then /^the publisher should be expanded$/ do
-	find("#publisher")["class"].should_not include("closed")
+  find("#publisher")["class"].should_not include("closed")
 end
 
 When /^I append "([^"]*)" to the publisher$/ do |stuff|

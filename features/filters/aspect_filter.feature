@@ -1,5 +1,5 @@
 @javascript
-Feature: Aspect navigation on the left menu
+Feature: Strainer navigation on the left menu
     In order to filter posts visibility and post targeting
     As a diaspora user
     I want to use the aspect navigation menu
@@ -9,14 +9,14 @@ Feature: Aspect navigation on the left menu
       And I sign in as "bob@bob.bob"
 
     Scenario: All aspects are selected by default
-      When I go to the aspects page
+      When I go to the stream page
       Then I should see "Besties" aspect selected
       Then I should see "Unicorns" aspect selected
 
     Scenario: Aspects selection is remembered through site navigation
-      When I go to the aspects page
+      When I go to the stream page
       And I select only "Besties" aspect
       And I go to the contacts page
-      And I go to the aspects page
+      And I go to the stream page
       Then I should see "Besties" aspect selected
       Then I should see "Unicorns" aspect unselected

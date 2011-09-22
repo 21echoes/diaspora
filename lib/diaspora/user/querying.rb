@@ -54,9 +54,12 @@ module Diaspora
         table = klass.table_name
         opts = prep_opts(klass, opts)
         opts[:klass] = klass
+        print "opts are #{opts}"
 
         shareable_from_others = construct_shareable_from_others_query(opts)
         shareable_from_self = construct_shareable_from_self_query(opts)
+        print "shareable from others is #{shareable_from_others.to_sql}."
+        print "shareable from self is #{shareable_from_self.to_sql}.\n"
 
         "(#{shareable_from_others.to_sql} LIMIT #{opts[:limit]}) UNION ALL (#{shareable_from_self.to_sql} LIMIT #{opts[:limit]}) ORDER BY #{opts[:order]} LIMIT #{opts[:limit]}"
       end

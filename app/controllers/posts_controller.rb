@@ -61,7 +61,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    default_stream_action(Stream::Public)
+    default_stream_action(default_stream_builder(Stream::Public))
   end
 
   def set_format_if_malformed_from_status_net

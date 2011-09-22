@@ -5,6 +5,7 @@ class Stream::Base
   attr_accessor :max_time, :order, :user, :publisher
 
   def initialize(user, opts={})
+    print "my opts are #{opts},... "
     self.user = user
     self.max_time = opts[:max_time]
     self.order = opts[:order]

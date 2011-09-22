@@ -19,7 +19,7 @@ Feature: posting from the main page
       Given I expand the publisher
       When I fill in "status_message_fake_text" with "I am eating a yogurt"
       And I press "Share"
-      And I go to the aspects page
+      And I go to the stream page
       Then I should see "I am eating a yogurt" within ".stream_element"
 
     Scenario: post a text-only message to just one aspect
@@ -30,11 +30,11 @@ Feature: posting from the main page
       And I press "Share"
       And I wait for the ajax to finish
 
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "PostingTo" aspect
       Then I should see "I am eating a yogurt"
 
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt"
 
@@ -44,7 +44,7 @@ Feature: posting from the main page
       And I fill in "status_message_fake_text" with "Look at this dog"
       And I press "Share"
       And I wait for the ajax to finish
-      And I go to the aspects page
+      And I go to the stream page
       Then I should see a "img" within ".stream_element div.photo_attachments"
       And I should see "Look at this dog" within ".stream_element"
       When I log out
@@ -60,7 +60,7 @@ Feature: posting from the main page
       Then I should see an uploaded image within the photo drop zone
       When I press "Share"
       And I wait for the ajax to finish
-      And I go to the aspects page
+      And I go to the stream page
       Then I should see a "img" within ".stream_element div.photo_attachments"
       When I log out
       And I sign in as "alice@alice.alice"
@@ -116,7 +116,7 @@ Feature: posting from the main page
       And I wait for the ajax to finish
       And I go to "bob@bob.bob"'s page
       Then I should not see "Here is a post for you to hide"
-      When I am on the aspects page
+      When I am on the stream page
       Then I should not see "Here is a post for you to hide"
 
     Scenario: delete one of my posts
@@ -124,12 +124,12 @@ Feature: posting from the main page
       When I fill in "status_message_fake_text" with "I am eating a yogurt"
       And I press "Share"
       And I wait for the ajax to finish
-      And I go to the aspects page
+      And I go to the stream page
       And I hover over the ".stream_element"
       And I preemptively confirm the alert
       And I click to delete the first post
       And I wait for the ajax to finish
-      And I go to the aspects page
+      And I go to the stream page
       Then I should not see "I am eating a yogurt"
 
     Scenario: change aspects in the middle of the post writing
@@ -143,10 +143,10 @@ Feature: posting from the main page
       When I append " and also cornflakes" to the publisher
       And I press "Share"
       And I wait for the ajax to finish
-      And I am on the aspects page
+      And I am on the stream page
       And I select only "PostingTo" aspect
       Then I should see "I am eating a yogurt and also cornflakes"
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt and also cornflakes"
 
@@ -158,10 +158,10 @@ Feature: posting from the main page
       And I press "Share"
       And I wait for the ajax to finish
 
-      And I am on the aspects page
+      And I am on the stream page
       And I select only "PostingTo" aspect
       Then I should see "I am eating a yogurt"
-      When I am on the aspects page
+      When I am on the stream page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt"
 
@@ -180,15 +180,15 @@ Feature: posting from the main page
       And I press "Share"
       And I wait for the ajax to finish
 
-      And I am on the aspects page
+      And I am on the stream page
       And I select only "PostingTo" aspect
       Then I should see "I am eating a yogurt"
       Then I should see "And cornflakes also"
-      When I am on the aspects page
+      When I am on the multi page
       And I select only "Besties" aspect
       Then I should not see "I am eating a yogurt"
       Then I should see "And cornflakes also"
-      When I am on the aspects page
+      When I am on the multi page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt"
       Then I should not see "And cornflakes also"

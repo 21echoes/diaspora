@@ -112,6 +112,8 @@ class PeopleController < ApplicationController
       end
     end
 
+    @posts = @stream.posts
+
     if params[:only_posts]
       render :partial => 'shared/stream', :locals => {:posts => @stream.stream_posts}
     else

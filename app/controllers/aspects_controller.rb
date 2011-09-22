@@ -2,27 +2,13 @@
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-require File.join(Rails.root, "lib", 'stream', "aspect")
+require File.join(Rails.root, "lib", 'stream', "multi")
 
 class AspectsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :save_sort_order, :only => :index
-  before_filter :save_selected_aspects, :only => :index
-  before_filter :ensure_page, :only => :index
 
   respond_to :html, :js
   respond_to :json, :only => [:show, :create]
-
-  def index
-    aspect_ids = (session[:a_ids] ? session[:a_ids] : [])
-    @stream = Stream::Aspect.new(current_user, aspect_ids,
-                               :order => sort_order,
-                               :max_time => params[:max_time].to_i)
-
-    if params[:only_posts]
-      render :partial => 'shared/stream', :locals => {:posts => @stream.stream_posts}
-    end
-  end
 
   def create
     @aspect = current_user.aspects.create(params[:aspect])
@@ -76,16 +62,12 @@ class AspectsController < ApplicationController
     if request.referer.include?('contacts')
       redirect_to contacts_path
     else
-      redirect_to aspects_path
+      redirect_to default_stream_path
     end
   end
 
   def show
-    if @aspect = current_user.aspects.where(:id => params[:id]).first
-      redirect_to aspects_path('a_ids[]' => @aspect.id)
-    else
-      redirect_to aspects_path
-    end
+    redirect_to default_stream_path('a_ids[]' =>  params[:id])
   end
 
   def edit
@@ -130,17 +112,5 @@ class AspectsController < ApplicationController
       @aspect.contacts_visible = true
     end
     @aspect.save
-  end
-
-  def ensure_page
-    params[:max_time] ||= Time.now + 1
-  end
-
-  private
-
-  def save_selected_aspects
-    if params[:a_ids].present?
-      session[:a_ids] = params[:a_ids]
-    end
   end
 end

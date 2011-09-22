@@ -19,13 +19,13 @@ Feature: new user registration
     And I preemptively confirm the alert
     And I follow "awesome_button"
 
-    Then I should be on the multi page
+    Then I should be on the stream page
     And I should not see "awesome_button"
 
   Scenario: new user skips the setup wizard
     When I preemptively confirm the alert
     And I follow "awesome_button"
-    Then I should be on the multi page
+    Then I should be on the stream page
 
   Scenario: closing a popover clears getting started
     When I preemptively confirm the alert

@@ -22,10 +22,6 @@
         = text_field_tag 'q', params[:q], :placeholder => t('find_people'), :type => 'search', :results => 5
 
     #nav_badges
-      #home_badge.badge
-        = link_to multi_path, :title => t('_home') do
-          = image_tag 'icons/home_grey.svg', :height => 16, :alt => t('_home')
-
       #notification_badge.badge
         = link_to notifications_path, :title => new_notification_text(@notification_count) do
           = image_tag 'icons/notifications_grey.svg', :height => 16, :id => "notification-flag", :alt => new_notification_text(@notification_count)

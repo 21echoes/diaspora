@@ -111,11 +111,11 @@ gem 'em-websocket'
 
 ### GROUPS ####
 
-group :test, :development do
+#group :test, :development do
   gem 'jasmine', '1.1.0.rc3'
-end
+#end
 
-group :test do
+#group :test do
   gem 'capybara', '~> 0.3.9'
   gem 'cucumber-rails', '0.3.2'
   gem 'cucumber-api-steps', :require => false
@@ -134,9 +134,9 @@ group :test do
   gem 'webmock', :require => false
   gem 'sqlite3'
   gem 'mock_redis'
-end
+#end
 
-group :development do
+#group :development do
   gem 'capistrano', '2.5.19', :require => false
   gem 'capistrano-ext', '1.2.1', :require => false
   gem 'linecache', '0.43', :platforms => :mri_18
@@ -146,4 +146,4 @@ group :development do
   gem 'ruby-debug', :platforms => :mri_18
   gem 'sod', :git => 'git://github.com/MikeSofaer/sod.git', :require => false
   gem 'yard'
-end
+#end

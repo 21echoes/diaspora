@@ -35,6 +35,15 @@ begin
       t.fork = true # You may get faster startup if you set this to false
       t.profile = 'rerun'
     end
+    
+    Cucumber::Rake::Task.new(:focus, 'Run your current single feature') do |t|
+      t.binary = vendored_cucumber_bin
+      t.fork = true # You may get faster startup if you set this to false
+      t.profile = 'focus'
+      cucumber_opts = ""
+      cucumber_opts << " -f pretty" unless ENV["CI"] || ENV["TRAVIS"]
+      t.cucumber_opts = cucumber_opts
+    end
 
     desc 'Run all features'
     task :all => [:ok, :wip]

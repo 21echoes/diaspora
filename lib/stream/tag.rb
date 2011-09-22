@@ -53,10 +53,9 @@ class Stream::Tag < Stream::Base
   def construct_post_query
     posts = StatusMessage
     if user.present? 
-      posts = posts.owned_or_visible_by_user(user)
+      posts = posts.user_tag_stream(user, [tag.id])
     else
-      posts = posts.all_public
+      posts = posts.public_tag_stream([tag.id])
     end
-    posts.tagged_with(tag_name)
   end
 end

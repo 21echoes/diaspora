@@ -77,8 +77,8 @@ module Resque
   end
 end
 
-# Patch aspect stream to not ajax in itself
-class Stream::Aspect
+# Patch strainer stream to not ajax in itself
+class Stream::Multi
   def ajax_stream?
     false
   end

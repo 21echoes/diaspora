@@ -6,6 +6,6 @@ require File.join(Rails.root, 'lib','stream', 'mention')
 
 class MentionsController < ApplicationController
   def index
-    default_stream_action(Stream::Mention)
+    default_stream_action(default_stream_builder(Stream::Mention))
   end
 end

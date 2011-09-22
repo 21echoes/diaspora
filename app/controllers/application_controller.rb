@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(:user) || (current_user.getting_started? ? getting_started_path : multi_path)
+    stored_location_for(:user) || (current_user.getting_started? ? getting_started_path : default_stream_path)
   end
 
   def tag_followings
@@ -148,15 +148,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def default_stream_action(stream_klass)
+  def default_stream_builder(stream_klass)
+    @stream = stream_klass.new(current_user, :max_time => max_time, :order => sort_order)
+  end
+
+  def default_stream_action(stream)
     authenticate_user!
     save_sort_order
-    @stream = stream_klass.new(current_user, :max_time => max_time, :order => sort_order)
+    @stream = stream
 
     if params[:only_posts]
       render :partial => 'shared/stream', :locals => {:posts => @stream.stream_posts}
     else
-      render 'aspects/index'
+      render 'aspects/index', :locals => {:posts => @stream.posts}
     end
   end
 
@@ -166,5 +170,10 @@ class ApplicationController < ActionController::Base
 
   def max_time
     params[:max_time] ? Time.at(params[:max_time].to_i) : Time.now
+  end
+
+  helper_method :default_stream_path
+  def default_stream_path(opts={})
+     multi_path(opts)
   end
 end

@@ -1,6 +1,5 @@
 @javascript
-Feature: Change password
-
+Feature: Change passworde
   Scenario: Change my password
   	Given I am signed in
     And I click on my name in the header
@@ -13,7 +12,7 @@ Feature: Change password
     Then I should see "Password changed"
     Then I should be on the new user session page
     When I sign in with password "newsecret"
-    Then I should be on the multi page
+    Then I should be on the stream page
 
   Scenario: Reset my password
     Given a user with email "forgetful@users.net"

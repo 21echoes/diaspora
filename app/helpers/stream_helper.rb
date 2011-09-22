@@ -3,25 +3,28 @@
 #   the COPYRIGHT file.
 
 module StreamHelper
-  def next_page_path(opts ={})
+  #TODO(dk):next_page_path should be defined by the Stream itself, not this helper (but: some things aren't streams??)
+  def next_page_path(opts={}, pass_through_params={})
+    if [AppsController, PeopleController].include? controller.class
+      parameters = pass_through_params.merge({:max_time => @posts.last.created_at.to_i})
+    else
+      parameters = pass_through_params.merge({:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order]})
+    end
+
     if controller.instance_of?(TagsController)
-      tag_path(:name => @stream.tag_name, :max_time => time_for_scroll(opts[:ajax_stream], @stream))
+      tag_path(@tag, parameters)
     elsif controller.instance_of?(AppsController)
-      "/apps/1?#{{:max_time => @posts.last.created_at.to_i}.to_param}"
+      "/apps/1?#{parameters.to_param}"
     elsif controller.instance_of?(PeopleController)
-      person_path(@person, :max_time => time_for_scroll(opts[:ajax_stream], @stream))
-    elsif controller.instance_of?(TagFollowingsController)
-      tag_followings_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order])
+      person_path(@person, parameters)
+    elsif [MultisController,AspectsController,TagFollowingsController].include? controller.class
+      multi_path(parameters.merge({:a_ids => @stream.aspect_ids, :tag_ids => @stream.tag_ids}))
     elsif controller.instance_of?(CommunitySpotlightController)
-      spotlight_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order])
+      spotlight_path(parameters)
     elsif controller.instance_of?(MentionsController)
-      mentions_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order])
-    elsif controller.instance_of?(MultisController)
-      multi_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order])
-    elsif controller.instance_of?(PostsController)
-      public_stream_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :sort_order => session[:sort_order])
-    elsif controller.instance_of?(AspectsController)
-      aspects_path(:max_time => time_for_scroll(opts[:ajax_stream], @stream), :a_ids => @stream.aspect_ids, :sort_order => session[:sort_order])
+      mentions_path(parameters)
+    elsif controller.instance_of?(PostsController) 
+      public_stream_path(parameters)
     else
       raise 'in order to use pagination for this new controller, update next_page_path in stream helper'
     end
@@ -36,7 +39,7 @@ module StreamHelper
   end
 
   def time_for_sort(post)
-    if controller.instance_of?(AspectsController)
+    if [AspectsController,MultisController].include? controller
       post.send(session[:sort_order].to_sym)
     else
       post.created_at

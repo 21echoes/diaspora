@@ -16,6 +16,7 @@ Feature: infinite scroll
       And I wait for the ajax to finish
       Then I should see 15 posts
       And I should see "alice - 26 - #seeded"
+      #And I debug
 
       When I scroll down
       Then I should see 30 posts
